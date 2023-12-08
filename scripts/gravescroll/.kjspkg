@@ -1,6 +1,6 @@
 {
     "author": "Liopyu",
-    "description": "Various 1.19 scripts from Liopyu",
+    "description": "Grave Scroll that Teleports You Back to Your Previous Death.",
     
     "versions": [9, 10],
     "modloaders": ["forge", "fabric"],

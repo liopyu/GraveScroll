@@ -1,0 +1,9 @@
+{
+    "author": "Liopyu",
+    "description": "Budding Amethyst Script",
+    
+    "versions": [9, 10],
+    "modloaders": ["forge", "fabric"],
+    "dependencies": [],
+    "incompatibilities": []
+}
