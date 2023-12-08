@@ -1,25 +1,25 @@
 global.amethystblock = tick => {
-    const { block, level } = tick;
-    const pos = block.getPos();
-    const Direction = java('net.minecraft.core.Direction');
+    let { block, level } = tick;
+    let pos = block.getPos();
+    let Direction = Java.loadClass('net.minecraft.core.Direction');
 
-    const growAmethystBuds = () => {
+    let growAmethystBuds = () => {
         Direction.values().forEach(face => {
-            const offsetPos = pos.relative(face);
-            const adjacentBlockId = level.getBlock(offsetPos).id;
-            const chanceOfGrowth = 0.1;
-            const randomValue = Math.random();
+            let offsetPos = pos.relative(face);
+            let adjacentBlockId = level.getBlock(offsetPos).id;
+            let chanceOfGrowth = 0.1;
+            let randomValue = Math.random();
 
-            const blockTypes = {
+            let blockTypes = {
                 'minecraft:air': 'small_amethyst_bud',
                 'minecraft:small_amethyst_bud': 'medium_amethyst_bud',
                 'minecraft:medium_amethyst_bud': 'large_amethyst_bud',
                 'minecraft:large_amethyst_bud': 'amethyst_cluster',
             };
 
-            const blockType = blockTypes[adjacentBlockId];
+            let blockType = blockTypes[adjacentBlockId];
             if (blockType && randomValue < chanceOfGrowth) {
-                const command = `setblock ${offsetPos.getX()} ${offsetPos.getY()} ${offsetPos.getZ()} minecraft:${blockType}[facing=${face}]`;
+                let command = `setblock ${offsetPos.getX()} ${offsetPos.getY()} ${offsetPos.getZ()} minecraft:${blockType}[facing=${face}]`;
                 tick.server.runCommandSilent(command);
             }
         });
@@ -28,10 +28,11 @@ global.amethystblock = tick => {
     growAmethystBuds();
 };
 
-onEvent('block.registry', event => {
+StartupEvents.registry("block", (event) => {
     event.create('rose_quartz_budding_block')
         .material('amethyst')
+        .soundType('amethyst')
         .hardness(0.5)
         .displayName('Rose Quartz Budding Block')
         .randomTick(tick => global.amethystblock(tick));
-});
+})
